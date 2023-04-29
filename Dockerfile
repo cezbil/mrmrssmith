@@ -37,6 +37,9 @@ WORKDIR /srv/app
 COPY --from=php_extension_installer --link /usr/bin/install-php-extensions /usr/local/bin/
 
 # persistent / runtime deps
+RUN apk add --update nodejs npm;
+RUN apk add --update make;
+# persistent / runtime deps
 RUN apk add --no-cache \
 		acl \
 		fcgi \

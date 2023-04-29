@@ -1,0 +1,60 @@
+{# templates/calculator/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Simple Calculator{% endblock %}
+
+{% block body %}
+    <h1>Simple Calculator</h1>
+
+    <form id="calculator-form" method="post" action="{{ path('calculator') }}">
+        <input type="number" name="valueOne" placeholder="Enter first number" required>
+        <select name="operation">
+            <option value="plus">+</option>
+            <option value="minus">-</option>
+            <option value="multiplication">*</option>
+            <option value="division">/</option>
+        </select>
+        <input type="number" name="valueTwo" placeholder="Enter second number" required>
+
+        <button type="submit">Calculate</button>
+    </form>
+    <div id="result">
+    {% if error is defined %}
+        <p class="error">{{ error }}</p>
+    {% elseif result is defined %}
+        Result: {{ result }}
+    {% endif %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="/js/jquery-3.6.4.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#calculator-form').on('submit', function (e) {
+                e.preventDefault();
+
+                const formData = $(this).serialize();
+
+                $.ajax({
+                    url: '/calculate',
+                    type: 'POST',
+                    data: formData,
+                    success: function (data) {
+                        console.log("d", data);
+
+                        $('#result').html('Result: ' + data.result);
+                    },
+                    error: function (xhr) {
+                        const error = JSON.parse(xhr.responseText).error;
+                        $('#result').html('<p class="error">' + error + '</p>');
+                    }
+                });
+            });
+        });
+
+    </script>
+{% endblock %}
+
