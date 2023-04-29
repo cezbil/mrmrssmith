@@ -10,3 +10,10 @@ ecs:
 
 ecs-fix:
 	@php vendor/bin/ecs check -c ecs.php --clear-cache --fix
+
+unit:
+	@php bin/phpunit
+
+unit-coverage:
+	@php bin/phpunit --coverage-clover coverage/unit-clover.xml --coverage-html coverage --verbose --coverage-xml=coverage --log-junit=coverage/phpunit.junit.xml
+

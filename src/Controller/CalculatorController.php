@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Calculator\Services\CalculatorService;
+use App\Calculator\Services\CalculatorServiceFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,15 +17,16 @@ class CalculatorController extends AbstractController
         return $this->render('calculator/index.html.twig');
     }
     #[Route('/calculate', name: 'calculate', methods: ['post'])]
-    public function calculate(Request $request, CalculatorService $calculatorService): Response
+    public function calculate(Request $request): Response
     {
         $error = null;
         $result = null;
         $valueOne = (float) $request->request->get('valueOne');
         $valueTwo = (float) $request->request->get('valueTwo');
         $operation = $request->request->get('operation');
+        $calculatorService = CalculatorServiceFactory::create($operation);
         try {
-            $result = $calculatorService->calculate($valueOne, $valueTwo, $operation);
+            $result = $calculatorService->calculate($valueOne, $valueTwo);
         } catch (\InvalidArgumentException $e) {
             $error = $e->getMessage();
         }
