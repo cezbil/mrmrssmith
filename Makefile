@@ -1,6 +1,6 @@
 build:
 	@docker compose build --pull --no-cache
-	@docker docker compose up -d
+	@docker compose up -d
 
 stop:
 	@docker compose down --remove-orphans
