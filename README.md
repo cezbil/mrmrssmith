@@ -13,7 +13,7 @@ if you're waiting long might be good idea to run
 and monitor situation
 3. Open `https://localhost` in your favorite web browser and [accept the auto-generated TLS certificate](https://stackoverflow.com/a/15076602/1352334)
 4. ```make stop``` to stop the Docker containers.
-
+5. to run tests will need to bash in to container and do ```make unit```
 or just clone it to some server that can run symfony 6.2 :D
 ## Symfony Docker
 I cloned symfony docker form: [symfony-docker](https://github.com/dunglas/symfony-docker)
